@@ -1,19 +1,17 @@
 <?php
 
+session_start();
+
+include "src/template.php";
+include "src/controller.php";
+
 $section = $_GET['section'] ?? $_POST['section'] ?? 'home-page';
 $action = $_GET['action'] ?? $_POST['action'] ?? 'default';
 
 /**
- * @param $section = 'home-page', execute the else-if block
- */
-if ($section == 'home-page') {
-  require_once("./controller/homePage.php");
-}
-
-/**
  * @param $section = 'contact-page', execute the else-if block
  */
-else if ($section == 'contact-page') {
+if ($section == 'contact-page') {
   require_once("./controller/contactPage.php");
   $contactController = new ContactController();
   $contactController->runAction($action);
@@ -26,12 +24,16 @@ else if ($section == 'contact-page') {
 else if ($section == 'about-us') {
   require_once("./controller/aboutUsPage.php");
   $aboutCrontroller = new AboutController();
-  $aboutCrontroller->showPageAction();
+  $aboutCrontroller->runAction($action);
 }
 
 /**
  * Default condition block, include home-page
+ *
+ * @param $section = 'home-page', execute the else-if block
  */
 else {
   require_once("./controller/homePage.php");
+  $homeController = new HomeController();
+  $homeController->runAction($action);
 }

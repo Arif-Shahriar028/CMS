@@ -1,17 +1,14 @@
 <?php
 
-class AboutController
+class AboutController extends Controller
 {
-  // @TODO add defaultAction function
 
-  /**
-   * @function showPageAction() return the expected about-us-page
-   */
-  function showPageAction()
+  function defaultAction()
   {
-    require_once("view/about-us-page.html");
+    echo "about controller";
+    $variables['title'] = 'About Us';
+    $variables['content'] = 'We are the developers';
+    $template = new Template('default');
+    $template->view('static-page', $variables);
   }
 }
-
-
-// require_once("view/about-us-page.html");

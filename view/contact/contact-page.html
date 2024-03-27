@@ -3,12 +3,13 @@
     <input type="hidden" name="section" value="contact-page">
     <input type="hidden" name="action" value="submitContactForm">
     <div class="mb-3">
-      <label for="message" class="form-label"><?php echo $inputOneLabel ?></label>
+      <label for="message" class="form-label"><?php echo $page->title ?></label>
       <input type="text" class="form-control" id="message">
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label"><?php echo $inputTwoLabel ?></label>
+      <label for="email" class="form-label"><?php echo $page->content ?></label>
       <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
     </div>
-    <button type="submit" class="btn btn-primary"><?php echo $buttonText ?></button>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+</div>

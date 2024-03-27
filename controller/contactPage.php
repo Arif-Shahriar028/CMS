@@ -4,22 +4,21 @@
 class ContactController extends Controller
 {
 
-
-  function defaultAction()
-  {
-    $variables['inputOneLabel'] = 'Your Message';
-    $variables['inputTwoLabel'] = 'You Email';
-    $variables['buttonText'] = 'Submit';
-    $template = new Template('default');
-    $template->view('contact/contact-page', $variables);
-  }
-
-
+  /**
+   * @method runBeforeAction() check the contact form submission
+   * check the session value 'has_submitted_form'
+   * if session value == 1 then already submitted and return true
+   * else return false
+   */
   function runBeforeAction()
   {
     if ($_SESSION['has_submitted_form'] ?? 0 == 1) {
-      $variables['title'] = 'Already Submitted';
-      $variables['content'] = 'You already submitted a message to us. We will try to reach you as soon as possible!';
+      $dbInstance = DBConnection::getInstance();
+      $connection = $dbInstance->getConnection();
+      $page = new Page($connection);
+      $page->findById(4);
+      $variables['page'] = $page;
+
       $template = new Template('default');
       $template->view('static-page', $variables);
       return true;
@@ -27,27 +26,36 @@ class ContactController extends Controller
     return false;
   }
 
-  function submitContactFormAction()
+  /**
+   * @method defaultAction includes the default contact-us page
+   */
+  function defaultAction()
   {
-    $variables['title'] = 'Thank You Contacting Us!';
-    $variables['content'] = 'We will try to reach you as soon as possible!';
+    $dbInstance = DBConnection::getInstance();
+    $connection = $dbInstance->getConnection();
+    $page = new Page($connection);
+    $page->findById(2);
+    $variables['page'] = $page;
+
     $template = new Template('default');
-    $template->view('static-page', $variables);
-    $_SESSION['has_submitted_form'] = 1;
+    $template->view('contact/contact-page', $variables);
   }
 
 
   /**
-   * @method showPageAction includes views on condition
+   * @method submitContactFormAction() take the form submission and show thank-you page
    */
-  // function showPageAction($action)
-  // {
-  //   if ($action == 'show') {
-  //     require("view/contact-page.html");
-  //   } else if ($action == 'submit') {
-  //     require("view/contact-us-thank-you.html");
-  //   } else {
-  //     echo $action;
-  //   }
-  // }
+  function submitContactFormAction()
+  {
+    $dbInstance = DBConnection::getInstance();
+    $connection = $dbInstance->getConnection();
+    $page = new Page($connection);
+    $page->findById(5);
+    $variables['page'] = $page;
+
+    $template = new Template('default');
+    $template->view('static-page', $variables);
+
+    $_SESSION['has_submitted_form'] = 1;
+  }
 }

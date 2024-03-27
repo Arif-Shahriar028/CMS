@@ -5,9 +5,12 @@ class AboutController extends Controller
 
   function defaultAction()
   {
-    echo "about controller";
-    $variables['title'] = 'About Us';
-    $variables['content'] = 'We are the developers';
+    $dbInstance = DBConnection::getInstance();
+    $connection = $dbInstance->getConnection();
+    $page = new Page($connection);
+    $page->findById(3);
+    $variables['page'] = $page;
+
     $template = new Template('default');
     $template->view('static-page', $variables);
   }

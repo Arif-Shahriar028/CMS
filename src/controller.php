@@ -18,7 +18,7 @@ class Controller
       $this->$actionName();
     } else {
       // var_dump($actionName);
-      require_once("view/status-pages/404.html");
+      require_once(VIEW_PATH . "status-pages/404.html");
     }
   }
 }

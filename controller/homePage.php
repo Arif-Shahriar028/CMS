@@ -12,7 +12,7 @@ class HomeController extends Controller
     $dbInstance = DBConnection::getInstance();
     $connection = $dbInstance->getConnection();
     $page = new Page($connection);
-    $page->findById(1);
+    $page->findBy('id', 1);
     $variables['page'] = $page;
 
     $template = new Template('default');

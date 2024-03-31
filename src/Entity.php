@@ -10,7 +10,7 @@ class Entity
   {
     $sql = "SELECT * FROM " . $this->tableName . " WHERE " . $fieldName . " = :value";
     $statement = $this->connection->prepare($sql);
-    $statement->bindParam(":value", $fieldValue, PDO::PARAM_INT);
+    $statement->bindParam(":value", $fieldValue, PDO::PARAM_STR);
     $statement->execute();
     $pageData = $statement->fetch(PDO::FETCH_ASSOC);
 
